@@ -26,6 +26,9 @@ end
 
 State(n::Int) = State{Float32}(n)
 
+LinearAlgebra.norm(Ψ::State, p::Real=2) = norm(Ψ.data, p)
+
+
 function run(circ::Circuit, Ψ::State)
     foreach(gate -> apply!(Ψ, gate), circ)
 end
@@ -35,12 +38,12 @@ function apply!(Ψ::State{F}, gate::AbstractGate) where {F<:AbstractFloat}
 end
 
 function apply_matmul!(Ψ::State{F}, gate) where {F<:AbstractFloat}
-	# TODO permute indices
-	perm = ...
-	permutedims!(Ψ.data, perm)
+    # TODO permute indices
+    perm = ...
+    permutedims!(Ψ.data, perm)
 
-	shape = size(Ψ.data)
-	Ψ.data = reshape(Ψ.data, ...)
+    shape = size(Ψ.data)
+    Ψ.data = reshape(Ψ.data, ...)
 
-	# TODO multiply matrices
+    # TODO multiply matrices
 end
