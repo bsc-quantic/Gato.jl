@@ -4,14 +4,27 @@ import LinearAlgebra: norm
 export State
 export run, apply!
 
+# TODO allow for physical dimensions != 2
+"""
+Represents the statevector of a pure state with a dense array.
+"""
 struct State{F}
-    data::Array{Complex{F}}
-    inds::Vector{Int}
+    data::AbstractArray{Complex{F}}
+    inds::Vector{Symbol}
 
-    State(n::Int) = new(zeros(Complex{F}, fill(2, n)...), 1:n)
+	"""
+		State{F}(n)
+
+	Initialize `State` to $\ket{0 \dots 0}$ product state.
+	"""
+    function State{F}(n::Int)
+		data = zeros(Complex{F}, fill(2, n)...)
+		data[1] = 1.0 + 0.0im
+		new(, 1:n)
+	end
 end
 
-LinearAlgebra.norm(Ψ::State, p::Real = 2) = norm(Ψ.data, p)
+State(n::Int) = State{Float32}(n)
 
 function run(circ::Circuit, Ψ::State)
     foreach(gate -> apply!(Ψ, gate), circ)
