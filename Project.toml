@@ -5,6 +5,7 @@ version = "0.1.0"
 
 [deps]
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+Quac = "b9105292-1415-45cf-bff1-d6ccf71e6143"
 Requires = "ae029012-a4dd-5104-9daa-d747884805df"
 # BlockArray
 # TBLIS
