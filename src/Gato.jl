@@ -1,4 +1,4 @@
-module Schrodinger
+module Gato
 
 include("State.jl")
 
