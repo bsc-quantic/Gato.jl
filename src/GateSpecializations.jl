@@ -21,10 +21,9 @@ end
 
 apply!(Ψ::State, gate::I) = nothing
 
+# TODO use antidiagonal representation or just permute memory? maybe former should be part of latter
 function apply!(Ψ::State, gate::X)
-    # TODO use antidiagonal representation or just permute memory? maybe former should be part of latter
     error("not implemented yet")
-
 end
 
 # TODO use antidiagonal representation
