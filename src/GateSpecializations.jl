@@ -19,9 +19,7 @@ end
 # TODO get #lanes from type of `gate`, so `Array{T,N}` is not constructed dynamically if possible
 # apply!(Ψ::State{T}, gate::AbstractGate) where {T} = Array{T,length(lanes(gate))}()
 
-# TODO multicontrol of I
 apply!(Ψ::State, gate::I) = nothing
-apply!(Ψ::State, gate::Control{I}) = nothing
 
 function apply!(Ψ::State, gate::X)
     # TODO use antidiagonal representation or just permute memory? maybe former should be part of latter
