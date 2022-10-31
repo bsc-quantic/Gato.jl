@@ -5,17 +5,6 @@ function apply!(Ψ::State{F}, gate::AbstractGate) where {F<:AbstractFloat}
     apply_matmul!(Ψ, gate)
 end
 
-function apply_matmul!(Ψ::State{F}, gate) where {F<:AbstractFloat}
-    # TODO permute indices
-    perm = ...
-    permutedims!(Ψ.data, perm)
-
-    shape = size(Ψ.data)
-    Ψ.data = reshape(Ψ.data, ...)
-
-    # TODO multiply matrices
-end
-
 # TODO get #lanes from type of `gate`, so `Array{T,N}` is not constructed dynamically if possible
 # apply!(Ψ::State{T}, gate::AbstractGate) where {T} = Array{T,length(lanes(gate))}()
 
@@ -80,4 +69,6 @@ function apply!(Ψ::State, gate::Control)
 end
 
 # TODO create own `permutedims!` (it does not support in-place permutation)
-apply!(Ψ::State, gate::Swap) = error("not implemented yet")
+function apply!(Ψ::State, gate::Swap)
+    error("not implemented yet")
+end

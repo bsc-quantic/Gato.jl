@@ -1,6 +1,6 @@
 module Gato
 
 include("State.jl")
-include("GateSpecializations.jl")
+include("apply.jl")
 
 end
