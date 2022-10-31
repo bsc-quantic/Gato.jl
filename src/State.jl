@@ -1,3 +1,5 @@
+import Base: eltype, size, ndims
+
 using Quac
 
 export State
@@ -33,6 +35,11 @@ data(Ψ::State) = Ψ.data
 
 eltype(::Type{State{A}}) where {A} = eltype(A)
 eltype(o::State{A}) where {A} = eltype(A)
+
+ndims(o::State) = ndims(o.data)
+
+size(o::State) = size(o.data)
+size(o::State, x) = size(o.data, x)
 
 # TODO return a view of the `State`
 function Base.getindex(s::State, p::Base.Pairs{Int,Int})
