@@ -46,4 +46,4 @@ function Base.getindex(s::State, p::Base.Pairs{Int,Int})
     error("not implemented yet")
 end
 
-run(circ::Circuit, Ψ::State) = foreach(gate -> apply!(Ψ, gate), circ)
+run(Ψ::State, circ::Circuit) = foreach(gate -> apply!(Ψ, gate), circ)
