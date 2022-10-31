@@ -20,16 +20,14 @@ struct State{T,N,S<:AbstractArray}
     end
 end
 
-State(data::A) where {A<:AbstractArray} = State{A}(data)
+State(n::Int) = State(Float32, n)
 
-function State{F}(n::Int) where {F<:AbstractFloat}
-    data = zeros(Complex{F}, fill(2, n)...)
+function State(::Type{T}, n::Int) where {T}
+    data = zeros(Complex{T}, fill(2, n)...)
     data[1] = 1.0 + 0.0im
-
+    view
     State(data)
 end
-
-State(n::Int) = State{Float32}(n)
 
 data(Ψ::State) = Ψ.data
 
