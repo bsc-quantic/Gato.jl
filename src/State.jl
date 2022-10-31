@@ -7,8 +7,17 @@ export run, apply!, data
 """
 Represents the statevector of a pure state with a dense array.
 """
-struct State{A<:AbstractArray}
-    data::A
+struct State{T,N,S<:AbstractArray}
+    data::S
+    inds::Vector{Int}
+
+    function State(data::S) where {S<:AbstractArray}
+        T = eltype(S)
+        N = ndims(S)
+        inds = [i for i in 1:N]
+
+        new{T,N,S}(data)
+    end
 end
 
 State(data::A) where {A<:AbstractArray} = State{A}(data)
