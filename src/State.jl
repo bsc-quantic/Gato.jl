@@ -41,9 +41,10 @@ ndims(o::State) = ndims(o.data)
 size(o::State) = size(o.data)
 size(o::State, x) = size(o.data, x)
 
-# TODO return a view of the `State`
-function Base.getindex(s::State, p::Base.Pairs{Int,Int})
-    error("not implemented yet")
+function Base.getindex(s::State, p::Base.Pair{Int,Int})
+    d, i = p
+
+    selectdim(data(s), d, i)
 end
 
 run(Ψ::State, circ::Circuit) = foreach(gate -> apply!(Ψ, gate), circ)
