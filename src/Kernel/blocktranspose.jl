@@ -1,7 +1,6 @@
 using StaticArrays: SMatrix
 using LinearAlgebra: transpose!, checksquare
 
-__precompile__(true)
 
 # TODO support rectangular matrices?
 function blocktranspose!(A::StridedMatrix{T}) where {T}
@@ -12,5 +11,5 @@ function blocktranspose!(A::StridedMatrix{T}) where {T}
 end
 
 for T in [ComplexF32, ComplexF64]
-    precompile(blocktranspose!, (StridedMatrix{T},))
+    precompile(blocktranspose!, (Matrix{T},))
 end
