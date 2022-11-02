@@ -64,7 +64,7 @@ end
 
 # TODO check no problem if single control or multicontrol
 function apply!(Ψ::State, gate::Control)
-    addr = [lane => 1 for lane in control(gate)]
+    addr = [lane => 2 for lane in control(gate)]
     apply!(Ψ[addr...], gate.op)
 end
 
