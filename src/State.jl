@@ -13,21 +13,22 @@ struct State{T,N,S<:AbstractArray}
     data::S
     inds::Vector{Int}
 
-    function State(data::S) where {S<:AbstractArray}
+    function State(data::S, inds) where {S<:AbstractArray}
         T = eltype(S)
         N = ndims(S)
-        inds = [i for i in 1:N]
 
-        new{T,N,S}(data)
+        new{T,N,S}(data, inds)
     end
 end
+
+State(data::S) where {S<:AbstractArray} = State(data, [i for i in 1:ndims(data)])
 
 State(n::Int) = State(Float32, n)
 
 function State(::Type{T}, n::Int) where {T}
     data = zeros(Complex{T}, fill(2, n)...)
     data[1] = 1.0 + 0.0im
-    view
+
     State(data)
 end
 
