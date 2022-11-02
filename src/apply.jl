@@ -22,7 +22,7 @@ end
 
 function apply!(Ψ::State, gate::Z)
     lane = only(lanes(gate))
-    rmul!(Ψ[lane=>1], -1)
+    rmul!(Ψ[lane=>2], -1)
 end
 
 function apply!(Ψ::State, gate::H)
@@ -31,22 +31,22 @@ end
 
 function apply!(Ψ::State, gate::S)
     lane = only(lanes(gate))
-    rmul!(Ψ[lane=>1], cispi(1 // 2))
+    rmul!(Ψ[lane=>2], cispi(1 // 2))
 end
 
 function apply!(Ψ::State, gate::Sd)
     lane = only(lanes(gate))
-    rmul!(Ψ[lane=>1], cispi(-1 // 2))
+    rmul!(Ψ[lane=>2], cispi(-1 // 2))
 end
 
 function apply!(Ψ::State, gate::T)
     lane = only(lanes(gate))
-    rmul!(Ψ[lane=>1], cispi(1 // 4))
+    rmul!(Ψ[lane=>2], cispi(1 // 4))
 end
 
 function apply!(Ψ::State, gate::Td)
     lane = only(lanes(gate))
-    rmul!(Ψ[lane=>1], cispi(-1 // 4))
+    rmul!(Ψ[lane=>2], cispi(-1 // 4))
 end
 
 function apply!(Ψ::State, gate::Rx)
