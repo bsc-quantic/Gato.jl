@@ -68,7 +68,13 @@ function apply!(Ψ::State, gate::Control)
     apply!(Ψ[addr...], gate.op)
 end
 
-# TODO create own `permutedims!` (it does not support in-place permutation)
+@doc raw"""
+Apply the **SWAP** gate to ``\Psi`` `State`.
+
+# Notes
+Current implementation lazily permutes the amplitude: i.e. it does not permute the data but the pointers to the data.
+"""
 function apply!(Ψ::State, gate::Swap)
-    error("not implemented yet")
+    q1, q2 = lanes(gate)
+    Ψ.inds[q1], Ψ.inds[q2] = Ψ.inds[q2], Ψ.inds[q1]
 end
