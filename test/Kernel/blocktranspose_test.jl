@@ -5,7 +5,27 @@ using LinearAlgebra: I
 @testset "blocktranpose - diagonals" begin
     for exp in 1:5
         m = Matrix(I(2^exp))
-        @test blocktranspose!(m) == m
+        @test begin
+            mt = similar(m)
+            copy!(mt, m)
+            blocktranspose!(mt)
+
+            mt == m
+        end
+
+        @test_skip begin
+            mt = similar(m)
+            copy!(mt, m)
+
+            for i in 1:2
+                for j in 1:2
+                    mtv = view(mt, (i:(i+1)*(size(mt, 1)÷2)), (j:(j+1)*(size(mt, 2)÷2)))
+                    blocktranspose!(mtv)
+                end
+            end
+
+            mt == m
+        end
     end
 end
 
