@@ -10,9 +10,11 @@ end
 
 apply!(Ψ::State, gate::I) = nothing
 
-# TODO use antidiagonal representation or just permute memory? maybe former should be part of latter
 function apply!(Ψ::State, gate::X)
-    error("not implemented yet")
+    lane = only(lanes(gate))
+    A = selectdim(data(Ψ), lane, 1)
+    B = selectdim(data(Ψ), lane, 2)
+    Kernel.swap!(A, B)
 end
 
 # TODO use antidiagonal representation
