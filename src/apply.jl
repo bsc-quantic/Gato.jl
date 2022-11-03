@@ -25,7 +25,12 @@ end
 Apply the ``Y`` gate to the ``\Psi`` `State`.
 """
 function apply!(Ψ::State, gate::Y)
-    error("not implemented yet")
+    lane = only(lanes(gate))
+    A = selectdim(data(Ψ), lane, 1)
+    B = selectdim(data(Ψ), lane, 2)
+    rmul!(A, -1im)
+    rmul!(B, 1im)
+    Kernel.swap!(A, B)
 end
 
 @doc raw"""
