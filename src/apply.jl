@@ -2,14 +2,14 @@ using Quac
 using LinearAlgebra: Diagonal, rmul!
 using Muscle
 
-function apply!(Ψ::State{F}, gate::AbstractGate) where {F<:AbstractFloat}
+function apply!(Ψ::State{F}, gate::Gate) where {F<:AbstractFloat}
     apply_matmul!(Ψ, gate)
 end
 
 # TODO get #lanes from type of `gate`, so `Array{T,N}` is not constructed dynamically if possible
-# apply!(Ψ::State{T}, gate::AbstractGate) where {T} = Array{T,length(lanes(gate))}()
+# apply!(Ψ::State{T}, gate::Gate) where {T} = Array{T,length(lanes(gate))}()
 
-apply!(Ψ::State, gate::I) = nothing
+apply!(Ψ::State, gate::Quac.I) = nothing
 
 @doc raw"""
 Apply the ``X`` gate to the ``\Psi`` `State`.
