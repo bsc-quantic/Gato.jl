@@ -45,7 +45,12 @@ end
 Apply the Hadamard gate to the ``\Psi`` `State`.
 """
 function apply!(Ψ::State, gate::H)
-    error("not implemented yet")
+    i = lanes(gate) |> only
+    A, B = Ψ[i=>1], Ψ[i=>2]
+
+    for i in eachindex(A, B)
+        A[i], B[i] = 1 / sqrt(2) * (A[i] + B[i]), 1 / sqrt(2) * (A[i] - B[i])
+    end
 end
 
 @doc raw"""
