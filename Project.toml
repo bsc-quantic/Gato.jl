@@ -5,5 +5,6 @@ version = "0.1.0"
 
 [deps]
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+Muscle = "21fe5c4b-a943-414d-bf3e-516f24900631"
 Quac = "b9105292-1415-45cf-bff1-d6ccf71e6143"
 StaticArrays = "90137ffa-7385-5640-81b9-e52037218182"

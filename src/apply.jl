@@ -1,6 +1,6 @@
 using Quac
 using LinearAlgebra: Diagonal, rmul!
-import .Kernel
+using Muscle
 
 function apply!(Ψ::State{F}, gate::AbstractGate) where {F<:AbstractFloat}
     apply_matmul!(Ψ, gate)
@@ -18,7 +18,7 @@ function apply!(Ψ::State, gate::X)
     lane = only(lanes(gate))
     A = selectdim(data(Ψ), lane, 1)
     B = selectdim(data(Ψ), lane, 2)
-    Kernel.swap!(A, B)
+    mapswap!(Muscle.Naive, A, B)
 end
 
 @doc raw"""
@@ -30,7 +30,7 @@ function apply!(Ψ::State, gate::Y)
     B = selectdim(data(Ψ), lane, 2)
     rmul!(A, -1im)
     rmul!(B, 1im)
-    Kernel.swap!(A, B)
+    mapswap!(Muscle.Naive, A, B, x -> x * -1im, x -> x * 1im)
 end
 
 @doc raw"""
