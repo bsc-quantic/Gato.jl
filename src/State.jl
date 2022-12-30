@@ -48,4 +48,4 @@ function Base.getindex(s::State, p::Base.Pair{Int,Int})
     selectdim(data(s), d, i)
 end
 
-run(Ψ::State, circ::Circuit) = foreach(gate -> apply!(Ψ, gate), circ)
+run!(Ψ::State, circ::Circuit) = foreach(gate -> apply!(Ψ, gate), circ)
