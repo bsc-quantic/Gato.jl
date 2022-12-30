@@ -44,7 +44,8 @@ Apply the Hadamard gate to the ``\Psi`` `State`.
 """
 function apply!(Ψ::State, gate::H)
     i = lanes(gate) |> only
-    A, B = data(Ψ[i=>1]), data(Ψ[i=>2])
+    A = Ψ[i=>1] |> data
+    B = Ψ[i=>2] |> data
 
     for i in eachindex(A, B)
         A[i], B[i] = 1 / sqrt(2) * (A[i] + B[i]), 1 / sqrt(2) * (A[i] - B[i])
