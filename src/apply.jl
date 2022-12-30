@@ -28,8 +28,6 @@ function apply!(Ψ::State, gate::Y)
     lane = only(lanes(gate))
     A = Ψ[lane=>1] |> data
     B = Ψ[lane=>2] |> data
-    rmul!(A, -1im)
-    rmul!(B, 1im)
     mapswap!(Muscle.Naive, A, B, x -> x * -1im, x -> x * 1im)
 end
 
