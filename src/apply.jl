@@ -38,7 +38,7 @@ Apply the ``Z`` gate to the ``\Psi`` `State`.
 """
 function apply!(Ψ::State, gate::Z)
     lane = only(lanes(gate))
-    rmul!(Ψ[lane=>2], -1)
+    rmul!(data(Ψ[lane=>2]), -1)
 end
 
 @doc raw"""
@@ -46,7 +46,7 @@ Apply the Hadamard gate to the ``\Psi`` `State`.
 """
 function apply!(Ψ::State, gate::H)
     i = lanes(gate) |> only
-    A, B = Ψ[i=>1], Ψ[i=>2]
+    A, B = data(Ψ[i=>1]), data(Ψ[i=>2])
 
     for i in eachindex(A, B)
         A[i], B[i] = 1 / sqrt(2) * (A[i] + B[i]), 1 / sqrt(2) * (A[i] - B[i])
@@ -58,7 +58,7 @@ Apply the ``S`` gate to the ``\Psi`` `State`.
 """
 function apply!(Ψ::State, gate::S)
     lane = only(lanes(gate))
-    rmul!(Ψ[lane=>2], cispi(1 // 2))
+    rmul!(data(Ψ[lane=>2]), cispi(1 // 2))
 end
 
 @doc raw"""
@@ -66,7 +66,7 @@ Apply the ``S^\dagger`` gate to the ``\Psi`` `State`.
 """
 function apply!(Ψ::State, gate::Sd)
     lane = only(lanes(gate))
-    rmul!(Ψ[lane=>2], cispi(-1 // 2))
+    rmul!(data(Ψ[lane=>2]), cispi(-1 // 2))
 end
 
 @doc raw"""
@@ -74,7 +74,7 @@ Apply the ``T`` gate to the ``\Psi`` `State`.
 """
 function apply!(Ψ::State, gate::T)
     lane = only(lanes(gate))
-    rmul!(Ψ[lane=>2], cispi(1 // 4))
+    rmul!(data(Ψ[lane=>2]), cispi(1 // 4))
 end
 
 @doc raw"""
@@ -82,7 +82,7 @@ Apply the ``T^\dagger`` gate to the ``\Psi`` `State`.
 """
 function apply!(Ψ::State, gate::Td)
     lane = only(lanes(gate))
-    rmul!(Ψ[lane=>2], cispi(-1 // 4))
+    rmul!(data(Ψ[lane=>2]), cispi(-1 // 4))
 end
 
 @doc raw"""
@@ -104,7 +104,7 @@ Apply the ``R_Z`` gate to the ``\Psi`` `State`.
 """
 function apply!(Ψ::State, gate::Rz)
     lane = only(lanes(gate))
-    rmul!(Ψ[lane=>1], cis(x.θ))
+    rmul!(data(Ψ[lane=>1]), cis(gate[:θ]))
 end
 
 # TODO check no problem if single control or multicontrol
@@ -113,7 +113,7 @@ Apply the `Control{T}` gate to the ``\Psi`` `State`.
 """
 function apply!(Ψ::State, gate::Control)
     addr = [lane => 2 for lane in control(gate)]
-    apply!(Ψ[addr...], gate.op)
+    apply!(Ψ[addr...], op(gate))
 end
 
 @doc raw"""
@@ -123,6 +123,9 @@ Apply the ``SWAP`` gate to ``\Psi`` `State`.
 Current implementation lazily permutes the amplitude: i.e. it does not permute the data but the pointers to the data.
 """
 function apply!(Ψ::State, gate::Swap)
-    q1, q2 = lanes(gate)
-    Ψ.inds[q1], Ψ.inds[q2] = Ψ.inds[q2], Ψ.inds[q1]
+    a, b = lanes(gate)
+    Ψ.inds[a], Ψ.inds[b] = Ψ.inds[b], Ψ.inds[a]
+
+    mapswap!()
+    # TODO
 end

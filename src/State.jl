@@ -44,8 +44,13 @@ size(o::State, x) = size(o.data, x)
 
 function Base.getindex(s::State, p::Base.Pair{Int,Int})
     d, i = p
+    content = selectdim(data(s), d, i)
 
-    selectdim(data(s), d, i)
+    shape = size(content) |> collect
+    insert!(shape, d, 1)
+
+    content = reshape(content, shape...)
+    return State(content)
 end
 
 run!(Ψ::State, circ::Circuit) = foreach(gate -> apply!(Ψ, gate), circ)
