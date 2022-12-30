@@ -123,8 +123,12 @@ Current implementation lazily permutes the amplitude: i.e. it does not permute t
 """
 function apply!(Ψ::State, gate::Swap)
     a, b = lanes(gate)
+
+    # permute indices
     Ψ.inds[a], Ψ.inds[b] = Ψ.inds[b], Ψ.inds[a]
 
-    mapswap!()
-    # TODO
+    # swap data
+    A = ψ[a=>1, b=>2] |> data
+    B = ψ[a=>2, b=>1] |> data
+    mapswap!(Muscle.Naive, A, B)
 end
