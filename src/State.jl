@@ -3,7 +3,7 @@ import Base: eltype, size, ndims
 using Quac
 
 export State
-export run, apply!, data
+export run!, apply!, data
 
 # TODO allow for physical dimensions != 2
 """
