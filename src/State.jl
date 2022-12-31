@@ -44,6 +44,7 @@ size(o::State, x) = size(o.data, x)
 
 function Base.getindex(s::State, p::Base.Pair{Int,Int})
     d, i = p
+    d = s.inds[d]
     content = selectdim(data(s), d, i)
 
     shape = size(content) |> collect
