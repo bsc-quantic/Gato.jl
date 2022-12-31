@@ -128,7 +128,7 @@ function apply!(Ψ::State, gate::Swap)
     Ψ.inds[a], Ψ.inds[b] = Ψ.inds[b], Ψ.inds[a]
 
     # swap data
-    A = ψ[a=>1, b=>2] |> data
-    B = ψ[a=>2, b=>1] |> data
-    mapswap!(Muscle.Naive, A, B)
+    # A = ψ[a=>1, b=>2] |> data
+    # B = ψ[a=>2, b=>1] |> data
+    # mapswap!(Muscle.Naive, A, B)
 end
