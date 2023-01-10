@@ -1,0 +1,124 @@
+---
+weave_options:
+    dpi: 128
+---
+# Benchmark Pauli gates
+
+```julia; echo = false; results = "hidden"
+using Quac
+using Gato
+using Plots
+using BenchmarkTools
+using BenchmarkPlots
+using StatsPlots
+```
+
+```julia
+suite = BenchmarkGroup()
+for gate in (X,Y,Z,H)
+    suite[string(nameof(gate))] = BenchmarkGroup()
+    let ψ = State(10)
+        for i in 1:4
+            suite[string(nameof(gate))][i] = @benchmarkable apply!($ψ,$(gate)($i)) gcsample=true seconds=1 # setup=(ψ = State(10)) gcsample=true
+        end
+    end
+end
+```
+
+```julia
+tune!(suite);
+results = run(suite);
+```
+
+### $Z$
+
+The Pauli $Z$ operator has a diagonal structure.
+$$
+Z = \begin{pmatrix}
+1 & 0 \\
+0 & -1
+\end{pmatrix}
+$$
+
+```julia, echo=false
+plot()
+for i in 1:4
+    plot!(results["Z"][i])
+end
+
+plot!(;
+    title=raw"$|\psi\rangle \rightarrow Z_i|\psi\rangle$",
+    minorgrid=true,
+    ylabel="Time [ns]",
+    xlabel=raw"$i$",
+)
+```
+
+### X
+
+$$
+X = \begin{pmatrix}
+0 & 1 \\
+1 & 0
+\end{pmatrix}
+$$
+
+```julia, echo=false
+plot()
+for i in 1:4
+    plot!(results["X"][i])
+end
+
+plot!(;
+    title=raw"$|\psi\rangle \rightarrow X_i|\psi\rangle$",
+    minorgrid=true,
+    ylabel="Time [ns]",
+    xlabel=raw"$i$",
+)
+```
+
+### Y
+
+$$
+Y = \begin{pmatrix}
+0 & -i \\
+i & 0
+\end{pmatrix}
+$$
+
+```julia, echo=false
+plot()
+for i in 1:4
+    plot!(results["Y"][i])
+end
+
+plot!(;
+    title=raw"$|\psi\rangle \rightarrow Y_i|\psi\rangle$",
+    minorgrid=true,
+    ylabel="Time [ns]",
+    xlabel=raw"$i$",
+)
+```
+
+### H
+
+$$
+H = \frac{1}{\sqrt{2}} \begin{pmatrix}
+1 & 1 \\
+1 & -1
+\end{pmatrix}
+$$
+
+```julia, echo=false
+plot()
+for i in 1:4
+    plot!(results["H"][i])
+end
+
+plot!(;
+    title=raw"$|\psi\rangle \rightarrow H_i|\psi\rangle$",
+    minorgrid=true,
+    ylabel="Time [ns]",
+    xlabel=raw"$i$",
+)
+```
